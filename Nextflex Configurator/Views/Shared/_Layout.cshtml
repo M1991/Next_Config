@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0" />
+    <title>@ViewBag.Title - Nextflex Configurator</title>  
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/ui-bootcss")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*@Styles.Render("~/Content/datepicker")*@
+    @Scripts.Render("~/bundles/datePicker")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/uibootstrap")
+    @using NextFlex_Configurator.Filters
+ </head>
+<body ng-app="nextApp">
+    @* <div class="loader"></div> *@
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Nexthermal", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                   @{
+                        RoleAllowAttribute rrc = new RoleAllowAttribute("Developer", "Nexthermal_Admin");
+                        var rrcStatus = rrc.AuthRole("Developer","Nexthermal_Admin");
+                        if (rrcStatus.Equals(true))
+                        {
+                            <li>@Html.ActionLink("Admin Panel", "AdminView", "Admin")</li>
+                        }
+                    }                   
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                       <li>@Html.ActionLink("Configurator", "ConfigSelection", "ConfigBasic")</li>
+                        <li>@Html.ActionLink("Account", "UserAccount", "Manage")</li>
+                        @*  <li>@Html.ActionLink("Expert", "ExpertUserTest", "ConfigBasic")</li> *@
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="bodySpacer"></div>
+        @RenderBody()
+    </div>
+    <div class="container-fluid">
+    <footer>
+        <hr />
+        @*<p class="pull-right"><a href="#"><i class="fa fa-4x fa-arrow-circle-up"></i>Back to top</a></p>*@
+        <a id="scroll-up-btn" onclick="topFunc();" style="float:right;"><i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true"></i></a>
+        @*<a id="scroll-up-btn" onclick="topFunc();" style="float:right;"><span class="fa fa-arrow-up" aria-hidden="true"></span></a>*@
+        <p>@*&copy; @DateTime.Now.Year Nexthermal, Corp. &middot; @Html.ActionLink("Contact us", "Contact", "Home") &middot; <a href="#">Terms & Conditions</a>*@</p>
+        <p>&copy; @DateTime.Now.Year Nexthermal, Corp. &middot; @Html.ActionLink("Contact us", "Contact", "Home") &middot; </p>
+    </footer>
+</div>
+      @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        var topFunc = function () {
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>

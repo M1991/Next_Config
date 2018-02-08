@@ -1,0 +1,58 @@
+﻿@model NextFlex_Configurator.Models.ModifyPartNoModel
+
+<div class="container">
+    <div class="form-horizontal">
+        <div class="row form-group">
+            @using (Ajax.BeginForm("AddPhoneNumber", "Manage", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", InsertionMode = InsertionMode.Replace, UpdateTargetId = "success-alert" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+               <div class="col-md-4 col-sm-5">
+                   <div class="row">
+                       <div class="col-md-3 col-sm-6">
+                           @Html.LabelFor(model => model.Diameter, htmlAttributes: new { @class = "control-labels" })
+                           @{
+                               List<SelectListItem> listItems = new List<SelectListItem>();
+                               listItems.Add(new SelectListItem
+                               {
+                                   Text = "6.5",
+                                   Value = "6.5",
+                                   Selected = true
+                               });
+                               listItems.Add(new SelectListItem
+                               {
+                                   Text = "8.0",
+                                   Value = "8"
+                               });
+                               listItems.Add(new SelectListItem
+                               {
+                                   Text = "8.5",
+                                   Value = "8.5"
+                               });
+                           }
+                       </div>
+                       <div class="col-sm-6">
+                           @Html.DropDownListFor(model => model.Diameter, new SelectList(listItems, "Value", "Text"), new { @class = "form-control" })
+                           @Html.ValidationMessageFor(model => model.Diameter, "", new { @class = "text-danger" })
+                       </div>
+                   </div>
+               </div>
+               <div class="col-md-4 col-sm-5">
+                   <div class="col-md-5 col-sm-6">
+                       @Html.LabelFor(model => model.Heater_length, htmlAttributes: new { @class = "control-label" })
+                   </div>
+                   <div class="col-md-5 col-sm-6">
+                       @Html.EditorFor(model => model.Heater_length, new { htmlAttributes = new { @class = "form-control", @min = "300", @step = "0.01" } })
+                       @Html.ValidationMessageFor(model => model.Heater_length, "", new { @class = "text-danger" })
+                   </div>
+               </div>
+               <div class="col-md-2 col-sm-2">
+                   <div class="col-md-offset-2 col-md-6">
+                       <input type="submit" value="Search" class="btn btn-success" />
+                   </div>
+               </div>
+             }
+            </div>
+        </div>
+    </div>
+

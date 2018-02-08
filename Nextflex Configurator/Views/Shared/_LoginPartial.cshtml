@@ -1,0 +1,105 @@
+﻿@*    @using Microsoft.AspNet.Identity
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+        }
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
+
+
+    <link href="~/Content/carousel.css" rel="stylesheet" />
+    @using Microsoft.AspNet.Identity
+    <div class="leftSidePanel">
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+           @Html.AntiForgeryToken()
+            <ul class = "nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink( User.Identity.GetUserName(), "Index", "Home", routeValues: null, htmlAttributes: new {title = "Manage", @class="lgTopLeft", id="nameBtn"})
+            </li>
+                <li class="dropOff"> <a href="javascript:document.getElementById('logoutForm').submit()" id="dropOffbtn"> Log off </a>
+            </li>
+            </ul>
+            }
+        }
+    </div>
+
+
+       else { <ul class = "nav navbar-nav navbar-right" >
+            <li> @Html.ActionLink("Log in", "Index", "Home", routeValues: null, htmlAttributes: new { id = "loginLink", ng_click="loginNow()" })
+            </li> </ul>
+            }*@
+
+    
+        @using Microsoft.AspNet.Identity 
+
+        @if (Request.IsAuthenticated)
+        {
+            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="dropdown">
+                   <span class="lgTopLeft"><a href="javascript:document.getElementById('logoutForm').submit()" id="dropOffbtn"><i class=" white glyphicon glyphicon-off"></i><span class="white">  Log off</span></a></span>
+                </div>
+            }
+         }
+
+
+@*
+    @using Microsoft.AspNet.Identity;
+
+    @if (Request.IsAuthenticated)
+      {
+        @:<ul class="nav navbar-nav navbar-right">
+            @:<li class="dropdown">
+                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+               {
+                @Html.AntiForgeryToken()
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Home", routeValues: null, htmlAttributes: new { title = "Manage", @class = "lgTopLeft", id = "nameBtn" })
+                    <span class="caret"></span>
+                </a>
+
+                <div class="dropdown-menu" id="formLogin">
+                    <div class="row">
+                        <div class="container-fluid">
+                            <form class="">
+                                <div class="form-group">
+                                    <a href="javascript:document.getElementById('logoutForm').submit()" id="dropOffbtn" class="btn btn-primary btn-block btn-sm"> Log off </a>
+                                    <label class="">Username</label>
+                                    <input class="form-control" name="username" id="username" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label class="">Password</label>
+                                    <input class="form-control" name="password" id="password" type="password">
+                                    <br class="">
+                                </div>
+                                <button type="submit" id="btnLogin" class="btn btn-success btn-sm">Login</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @:</li>
+            <li>
+                <a href="#" data-toggle="modal" data-target="#modalRegister" class="">Register</a>
+            </li>
+        @:</ul>
+     }
+
+*@

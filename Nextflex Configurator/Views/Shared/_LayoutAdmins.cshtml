@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>@ViewBag.Title - Admin Page</title>
+    <link href="~/Content/LayoutSideAdmin.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angular")
+    @Styles.Render("~/Content/datepicker")
+    @Scripts.Render("~/bundles/datePicker")
+    @using Microsoft.AspNet.Identity
+    @using NextFlex_Configurator.Filters
+</head>
+<body>
+    <div id="whiteClrTop" class="clrBlue">
+       <span class="whiteClr white">Admin Section</span>        
+      
+        <span id="logLeft" class="alignLogLeft"> @Html.Partial("_LoginPartial")</span>
+    </div>
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <ul class="list-unstyled components">
+                @*   @if (User.IsInRole("Admin"))
+        {*@
+                <div class="cngColor">
+                    <p><i class="glyphicon glyphicon-th-list"></i>&nbsp;&nbsp;@Html.ActionLink("Dashboard", "AdminView", "Admin")</p>
+                    @*<p><i class="glyphicon glyphicon-home"></i>&nbsp;&nbsp;@Html.ActionLink("Home", "Index", "Home")</p>*@
+                    <p><i class="fa fa-home faa-ring animated"></i>&nbsp;&nbsp;@Html.ActionLink("Home", "Index", "Home")</p>     
+                    @*<p><i class="glyphicon glyphicon-cog"></i>&nbsp;&nbsp;@Html.ActionLink("Configure", "ConfigSelection", "ConfigBasic")</p>*@
+                    <p><i class="fa fa-cog fa-spin"></i>&nbsp;&nbsp;@Html.ActionLink("Configure", "ConfigSelection", "ConfigBasic")</p>
+                </div>
+                <hr />
+                <p class="SideDivider">Admin/User Section</p>
+                <p><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;@Html.ActionLink("Add new User/Admin", "Create", "NextUser") </p>
+                <p><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;@Html.ActionLink("Modify User/Admin", "Index", "NextUser")</p>
+                @{
+                    RoleAllowAttribute rrc = new RoleAllowAttribute("Developer");
+                    var rrcStatus = rrc.AuthRole("Developer");
+                    if (rrcStatus.Equals(true))
+                    {
+                        <p><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;@Html.ActionLink("Delete User/Admin No", "Index", "NextUser")</p>
+                    }
+                }
+                <hr />
+                <p class="SideDivider">Configurator Section</p>               
+                <p><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;@Html.ActionLink("Add New Part No", "Create", "ConfigNext")</p>
+                <p class="white"><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;@Html.ActionLink("Modify Part No", "Index", "ConfigNext")</p>
+                @{
+                    if (rrcStatus.Equals(true))
+                    {
+                        <p><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;@Html.ActionLink("Delete Part No", "Index", "ConfigNext")</p>
+                        }
+                    }
+                <hr />
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <p><i class="glyphicon glyphicon-user"></i>&nbsp;@Html.ActionLink(User.Identity.GetUserName(), "UserAccount", "Manage")</p>
+                }
+               <span class="alignLogin">
+                    @Html.Partial("_LoginPartial")
+               </span>  
+                 @*{*@
+            </ul>
+          <!--
+              <div class="alignLogin">               
+            </div>  
+          -->                
+        </nav>
+        <!-- Page Content Holder -->
+        <div id="content">           
+            <nav class="navbar navbar-default">
+                <div class="container-fluid midBar">
+                    <div class="navbar-header">
+                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                            <i class="glyphicon glyphicon-align-left"></i>
+                            <span>Toggle Sidebar</span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">Page</a></li>
+                            <li><a href="#">Page</a></li>
+                            <li><a href="#">Page</a></li>
+                            <li><a href="#">Page</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            @RenderBody()
+        </div>
+    </div>
+    <footer>
+        <hr />
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>&copy; @DateTime.Now.Year Nexthermal, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms & Conditions</a></p>
+    </footer>
+   @*
+
+    <nav class="navbar navbar-inverse sidebar" role="navigation">
+        <a href="#" class="btn btn-primary">Home </a>
+        <a href="#" class="btn btn-primary">About </a>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                <nav class="nav nav-tabs navbar-left">
+                    <a href="#" class="btn btn-primary">Home </a>
+                    <a href="#" class="btn btn-primary">About </a>
+                </nav>
+            </div>
+            <div class="col-sm-10">
+                <div class="main">
+                    <!-- Content Here -->
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container">
+                <footer>
+                    <hr />
+                    <p class="pull-right"><a href="#">Back to top</a></p>
+                    <p>&copy; @DateTime.Now.Year Nexthermal, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms & Conditions</a></p>
+                </footer>
+            </div>
+        </div>
+    </div>
+*@
+    
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Configure", "ConfigSelection", "ConfigBasic")</li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>    <div class="container-fluid">
+
+        @RenderBody()
+    </div>*@
+   
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $('#whiteClrTop').toggleClass('active');
+                $('#logLeft').toggleClass('active');
+            });           
+        });    
+    </script>
+  @*
+      
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+  
+      *@
+    @RenderSection("scripts", required: false)
+</body>
+</html>
