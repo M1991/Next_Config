@@ -1,0 +1,143 @@
+﻿@model IEnumerable<NextFlex_Configurator.Models.user>
+@using NextFlex_Configurator.Filters
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmins.cshtml";
+}
+@if (Session["CheckStateU"] != null)
+        {
+            Session["CheckStateU"] = null;
+        <div class="alert alert-success" id="success-alert">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Success ! </strong>
+            A new user have been added to the database.
+        </div>
+} 
+
+<h2>Index</h2>
+@using (Html.BeginForm("Index", "NextUser"))
+{
+    <div class="row">
+        <div class="col-sm-1">
+            <label>Search :</label>
+        </div>
+        <div class="col-sm-3">
+            @Html.TextBox("Username", "", new { @class = "form-control fcus", @placeholder = "Username", @required = "required" })
+        </div>
+        <div class="col-sm-1"><input type="submit" value="Search" class="btn btn-default" /></div>
+        <div class="col-sm-1">@Html.ActionLink("Reset All", "Index", null, new { @class = "btn btn-default" })</div>
+    </div>
+}
+<br/>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.customerNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.company)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.username)
+        </th>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>   
+       
+        <th>
+            @Html.DisplayNameFor(model => model.stamp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usercode)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.country_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.city_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.state_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address)
+        </th>
+    
+        <th>
+            @Html.DisplayNameFor(model => model.Sales_Person)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.customerNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.company)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>           
+        <td>
+            @Html.DisplayFor(modelItem => item.stamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usercode)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.country_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.city_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.state_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.Sales_Person)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.access_level)
+        </td>
+        <td>
+            <a href="@Url.Action("Edit", "NextUser", new { id = item.cust_id })" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            </a>
+           
+           @{
+               RoleAllowAttribute rrc = new RoleAllowAttribute("Developer");
+               var rrcStatus = rrc.AuthRole("Developer");
+               if (rrcStatus.Equals(true))
+               {
+                <a href="@Url.Action("Delete", "NextUser", new { id = item.cust_id})" class="btn btn-default">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </a>
+               }
+        }   
+        </td>
+    </tr>
+}
+
+</table>
